@@ -276,7 +276,15 @@ var QRCode;
 		function _onMakeImage() {
 			this._elImage.src = this._elCanvas.toDataURL("image/png");
 			this._elImage.style.display = "block";
-			this._elCanvas.style.display = "none";			
+			this._elCanvas.style.display = "none";
+			if (this._htOption.download) {
+				var link = document.createElement('a');
+				link.href = this._elImage.src;
+				link.download = 'qrcode.png';
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+			}
 		}
 		
 		// Android 2.1 bug workaround
@@ -539,7 +547,8 @@ var QRCode;
 			typeNumber : 4,
 			colorDark : "#000000",
 			colorLight : "#ffffff",
-			correctLevel : QRErrorCorrectLevel.H
+			correctLevel : QRErrorCorrectLevel.H,
+                        download : false
 		};
 		
 		if (typeof vOption === 'string') {
